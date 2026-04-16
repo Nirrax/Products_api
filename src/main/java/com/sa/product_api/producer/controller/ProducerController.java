@@ -1,6 +1,7 @@
 package com.sa.product_api.producer.controller;
 
 import com.sa.product_api.producer.dto.ProducerDTO;
+import com.sa.product_api.producer.dto.ProducerResponse;
 import com.sa.product_api.producer.model.Producer;
 import com.sa.product_api.producer.service.ProducerService;
 import org.springframework.http.ResponseEntity;
@@ -25,22 +26,22 @@ public class ProducerController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Producer>> findAll() {
+    public ResponseEntity<List<ProducerResponse>> findAll() {
         return ResponseEntity.ok().body(this.producerService.getProducers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Producer> findOne(@PathVariable Long id) {
+    public ResponseEntity<ProducerResponse> findOne(@PathVariable Long id) {
         return ResponseEntity.ok().body(this.producerService.getProducerById(id));
     }
 
     @PostMapping("")
-    public ResponseEntity<Producer> create(@RequestBody ProducerDTO producerDTO) {
+    public ResponseEntity<ProducerResponse> create(@RequestBody ProducerDTO producerDTO) {
         return ResponseEntity.ok().body(this.producerService.createProducer(producerDTO));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Producer> update(@PathVariable Long id, @RequestBody ProducerDTO producerDTO) {
+    public ResponseEntity<ProducerResponse> update(@PathVariable Long id, @RequestBody ProducerDTO producerDTO) {
         return ResponseEntity.ok().body(this.producerService.updateProducer(id, producerDTO));
     }
 
