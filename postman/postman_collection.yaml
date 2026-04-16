@@ -1,0 +1,159 @@
+{
+  "info": {
+    "name": "Producers & Products API",
+    "_postman_id": "c1f3c7d2-1234-4abc-9abc-1234567890ab",
+    "description": "Collection for managing producers and products",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api"
+    },
+    {
+      "key": "producerId",
+      "value": "1"
+    },
+    {
+      "key": "productId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Producers",
+      "item": [
+        {
+          "name": "Get All Producers",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/producers"
+          }
+        },
+        {
+          "name": "Get Producer By ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/producers/{{producerId}}"
+          }
+        },
+        {
+          "name": "Create Producer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Apple\"\n}"
+            },
+            "url": "{{baseUrl}}/producers"
+          }
+        },
+        {
+          "name": "Update Producer",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Apple Inc.\"\n}"
+            },
+            "url": "{{baseUrl}}/producers/{{producerId}}"
+          }
+        },
+        {
+          "name": "Delete Producer",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/producers/{{producerId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/products"
+          }
+        },
+        {
+          "name": "Filter Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products?color=red&storage=256GB",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                { "key": "color", "value": "red" },
+                { "key": "storage", "value": "256GB" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Product By ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/products/{{productId}}"
+          }
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"iPhone 15 Pro\",\n  \"producerId\": 1,\n  \"attributes\": {\n    \"color\": \"Natural Titanium\",\n    \"storage\": \"256GB\",\n    \"screen_size\": 6.1\n  }\n}"
+            },
+            "url": "{{baseUrl}}/products"
+          }
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"iPhone 15 Pro Max\",\n  \"attributes\": {\n    \"storage\": \"512GB\",\n    \"color\": null\n  }\n}"
+            },
+            "url": "{{baseUrl}}/products/{{productId}}"
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/products/{{productId}}"
+          }
+        }
+      ]
+    }
+  ]
+}
