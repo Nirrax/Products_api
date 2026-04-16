@@ -1,9 +1,12 @@
 package com.sa.product_api.product.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sa.product_api.producer.model.Producer;
 import com.sa.product_api.producer.service.ProducerService;
 import com.sa.product_api.product.dto.ProductDTO;
 import com.sa.product_api.product.dto.ProductUpdateDTO;
+import com.sa.product_api.product.exception.InvalidFiltersException;
 import com.sa.product_api.product.exception.ProductNotFoundException;
 import com.sa.product_api.product.model.Product;
 import com.sa.product_api.product.repository.ProductRepository;
@@ -17,15 +20,23 @@ import java.util.Map;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProducerService producerService;
+    private final ObjectMapper objectMapper;
 
-    public ProductServiceImpl(ProductRepository productRepository, ProducerService producerService) {
+    public ProductServiceImpl(ProductRepository productRepository, ProducerService producerService,  ObjectMapper objectMapper) {
         this.productRepository = productRepository;
         this.producerService = producerService;
+        this.objectMapper = objectMapper;
     }
 
     @Override
-    public List<Product> getProducts() {
-        return this.productRepository.findAll();
+    public List<Product> getProducts(Map<String, String> filters) {
+        if (filters.isEmpty()) return this.productRepository.findAll();
+        try {
+            String json = objectMapper.writeValueAsString(filters);
+            return this.productRepository.findByAttributes(json);
+        } catch (JsonProcessingException e) {
+            throw new InvalidFiltersException("Failed to serialize filters");
+        }
     }
 
     @Override
