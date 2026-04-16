@@ -17,7 +17,7 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
       SPRING_JPA_SHOW_SQL: "true"
 
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/product_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/productdb
       SPRING_DATASOURCE_READ_USERNAME: postgres
       SPRING_DATASOURCE_READ_PASSWORD: pass
       SPRING_DATASOURCE_READ_DRIVER_CLASS_NAME: org.postgresql.Driver
@@ -26,7 +26,7 @@ services:
     image: postgres:latest
     container_name: music-genre-clasifier-postgres
     environment:
-      POSTGRES_DB: mydb
+      POSTGRES_DB: productdb
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pass
 
