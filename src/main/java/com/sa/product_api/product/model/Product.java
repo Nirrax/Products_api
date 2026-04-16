@@ -38,4 +38,10 @@ public class Product {
     @ManyToOne(optional = false)
     @JoinColumn(name = "producer_id")
     private Producer producer;
+
+    public Product(String name, Producer producer, Map<String, Object> attributes) {
+        this.name = name;
+        this.producer = producer;
+        this.attributes = attributes;
+    }
 }
