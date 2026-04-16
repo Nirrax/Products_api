@@ -1,0 +1,72 @@
+databaseChangeLog:
+        - changeSet:
+                  id: 1-create-producers
+                  author: dev
+                  changes:
+                          - createTable:
+                                    tableName: "PRODUCERS"
+                                    columns:
+                                            - column:
+                                                      name: id
+                                                      type: BIGINT
+                                                      autoIncrement: true
+                                                      constraints:
+                                                              primaryKey: true
+                                                              nullable: false
+                                            - column:
+                                                      name: name
+                                                      type: VARCHAR(255)
+                                                      constraints:
+                                                              nullable: false
+                                                              unique: true
+
+        - changeSet:
+                  id: 2-create-products
+                  author: dev
+                  changes:
+                          - createTable:
+                                    tableName: "PRODUCTS"
+                                    columns:
+                                            - column:
+                                                      name: id
+                                                      type: BIGINT
+                                                      autoIncrement: true
+                                                      constraints:
+                                                              primaryKey: true
+                                                              nullable: false
+                                            - column:
+                                                      name: name
+                                                      type: VARCHAR(255)
+                                                      constraints:
+                                                              nullable: false
+                                            - column:
+                                                      name: attributes
+                                                      type: JSONB
+                                            - column:
+                                                      name: producer_id
+                                                      type: BIGINT
+                                                      constraints:
+                                                              nullable: false
+
+        - changeSet:
+                  id: 3-add-fk-products-producer
+                  author: dev
+                  changes:
+                          - addForeignKeyConstraint:
+                                    baseTableName: "PRODUCTS"
+                                    baseColumnNames: producer_id
+                                    referencedTableName: "PRODUCERS"
+                                    referencedColumnNames: id
+                                    constraintName: fk_products_producer
+                                    onDelete: CASCADE
+                                    onUpdate: RESTRICT
+
+        - changeSet:
+            id: 4-add-gin-index-products-attributes
+            author: dev
+            changes:
+              - sql:
+                  sql: CREATE INDEX idx_products_attributes_gin ON PRODUCTS USING GIN (attributes);
+            rollback:
+              - sql:
+                  sql: DROP INDEX idx_products_attributes_gin;
