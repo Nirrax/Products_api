@@ -27,22 +27,27 @@ public class ProducerController {
 
     @GetMapping("")
     public ResponseEntity<List<ProducerResponse>> findAll() {
-        return ResponseEntity.ok().body(this.producerService.getProducers());
+        List<Producer> producers =  this.producerService.getProducers();
+        return ResponseEntity.ok()
+                .body(producers.stream().map(ProducerResponse::from).toList());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProducerResponse> findOne(@PathVariable Long id) {
-        return ResponseEntity.ok().body(this.producerService.getProducerById(id));
+        return ResponseEntity.ok()
+                .body(ProducerResponse.from(this.producerService.getProducerById(id)));
     }
 
     @PostMapping("")
     public ResponseEntity<ProducerResponse> create(@RequestBody ProducerDTO producerDTO) {
-        return ResponseEntity.ok().body(this.producerService.createProducer(producerDTO));
+        return ResponseEntity.ok()
+                .body(ProducerResponse.from(this.producerService.createProducer(producerDTO)));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<ProducerResponse> update(@PathVariable Long id, @RequestBody ProducerDTO producerDTO) {
-        return ResponseEntity.ok().body(this.producerService.updateProducer(id, producerDTO));
+        return ResponseEntity.ok()
+                .body(ProducerResponse.from(this.producerService.updateProducer(id, producerDTO)));
     }
 
     @DeleteMapping("/{id}")
