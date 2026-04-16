@@ -4,9 +4,11 @@ import com.sa.product_api.producer.dto.ProducerDTO;
 import com.sa.product_api.producer.exception.ProducerNotFoundException;
 import com.sa.product_api.producer.model.Producer;
 import com.sa.product_api.producer.repository.ProducerRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ProducerServiceImpl implements ProducerService {
     private final ProducerRepository producerRepository;
 
