@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
@@ -27,8 +29,8 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<ProductResponse>> findAll() {
-        List<Product> products = this.productService.getProducts();
+    public ResponseEntity<List<ProductResponse>> findAll(@RequestParam Map<String, String> filters) {
+        List<Product> products = this.productService.getProducts(filters);
         return ResponseEntity.ok()
                 .body(products.stream().map(ProductResponse::from).toList());
     }
