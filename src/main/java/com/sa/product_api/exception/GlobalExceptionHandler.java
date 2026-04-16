@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
             ProducerNotFoundException.class,
             NoResourceFoundException.class,
     })
-    public ResponseEntity<ErrorDTO> handleNotFound(RuntimeException e) {
+    public ResponseEntity<ErrorDTO> handleNotFound(Exception e) {
         ErrorDTO error = new ErrorDTO(
                 HttpStatus.NOT_FOUND.value(),
                 e.getMessage()
@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorDTO> handleIllegalArgument(RuntimeException e) {
+    public ResponseEntity<ErrorDTO> handleIllegalArgument(IllegalArgumentException e) {
         ErrorDTO error = new ErrorDTO(
                 HttpStatus.BAD_REQUEST.value(),
                 e.getMessage()
