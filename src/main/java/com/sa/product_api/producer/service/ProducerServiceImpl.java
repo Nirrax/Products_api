@@ -35,4 +35,11 @@ public class ProducerServiceImpl implements ProducerService {
     public Producer createProducer(ProducerDTO producerDTO) {
         return this.producerRepository.save(new Producer(producerDTO.name()));
     }
+
+    @Override
+    public Producer updateProducer(Long id, ProducerDTO producerDTO) {
+        Producer producer = this.producerRepository.findById(id).orElseThrow(() -> new ProducerNotFoundException("Producer not found"));
+        producer.setName(producerDTO.name());
+        return producerRepository.save(producer);
+    }
 }
