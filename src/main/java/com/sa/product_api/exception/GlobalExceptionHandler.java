@@ -2,6 +2,7 @@ package com.sa.product_api.exception;
 
 import com.sa.product_api.exception.dto.ErrorDTO;
 import com.sa.product_api.producer.exception.ProducerNotFoundException;
+import com.sa.product_api.product.exception.InvalidFiltersException;
 import com.sa.product_api.product.exception.ProductNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler({
+            MethodArgumentNotValidException.class,
+            InvalidFiltersException.class
+    })
     public ResponseEntity<ErrorDTO> handleValidation(MethodArgumentNotValidException ex) {
         String message = ex.getBindingResult().getFieldErrors().stream()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
