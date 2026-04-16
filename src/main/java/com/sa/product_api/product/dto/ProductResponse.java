@@ -7,7 +7,7 @@ import com.sa.product_api.product.model.Product;
 import java.util.Map;
 
 public record ProductResponse(Long id, String name, Map<String, Object> attributes, ProducerResponse producer) {
-    public static ProductResponse from(Product product, Producer producer) {
-        return new ProductResponse(product.getId(), product.getName(), product.getAttributes(), ProducerResponse.from(producer));
+    public static ProductResponse from(Product product) {
+        return new ProductResponse(product.getId(), product.getName(), product.getAttributes(), ProducerResponse.from(product.getProducer()));
     }
 }
