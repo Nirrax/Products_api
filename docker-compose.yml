@@ -1,0 +1,37 @@
+services:
+  backend:
+    build: .
+    container_name: spring-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SERVER_PORT: 8080
+      SERVER_SERVLET_CONTEXT_PATH: /api
+
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK: INFO
+      LOGGING_LEVEL_COM_EXAMPLE: DEBUG
+
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_JPA_SHOW_SQL: "true"
+
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/product_db
+      SPRING_DATASOURCE_READ_USERNAME: postgres
+      SPRING_DATASOURCE_READ_PASSWORD: pass
+      SPRING_DATASOURCE_READ_DRIVER_CLASS_NAME: org.postgresql.Driver
+
+  postgres:
+    image: postgres:latest
+    container_name: music-genre-clasifier-postgres
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
