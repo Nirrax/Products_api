@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
@@ -31,4 +32,9 @@ public class Producer {
 
     @OneToMany(mappedBy = "producer")
     private Set<Product> products;
+
+    public Producer(String name) {
+        this.name = name;
+    }
+
 }
